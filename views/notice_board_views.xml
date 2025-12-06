@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Main Menu -->
+    <menuitem
+        id="menu_university_school_configuration"
+        name="University Configuration"
+        parent="menu_university_configuration_root"
+        sequence="10"
+        groups="education_university_management.education_university_management_group_hod"
+    />
+
+    <!-- Notice Board Action -->
+    <record id="notice_board_action" model="ir.actions.act_window">
+        <field name="name">Notice Board</field>
+        <field name="res_model">university.notice</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem
+        id="menu_notice_board"
+        name="Notice Board"
+        parent="menu_university_school_configuration"
+        action="notice_board_action"
+        sequence="1"
+    />
+
+    <!-- =============== -->
+    <!-- FORM VIEW -->
+    <!-- =============== -->
+    <record id="view_university_notice_form" model="ir.ui.view">
+        <field name="name">university.notice.form</field>
+        <field name="model">university.notice</field>
+        <field name="arch" type="xml">
+
+            <form string="Notice Board">
+
+                <!-- TOP BUTTON -->
+                <header>
+                    <button name="send_by_email" type="object"
+                        class="oe_highlight"
+                        string="Send by Email"/>
+                </header>
+
+                <sheet>
+                    <group>
+                        <field name="subject"/>
+                        <field name="expiry_date"/>
+                        <field name="description"/>
+                    </group>
+
+                    <notebook>
+                        <page string="User Details">
+                            <field name="user_line_ids" >
+                                <list editable="bottom">
+                                    <field name="user_id" optional="show"/>
+<!--                                    <field name="name" optional="show"/>-->
+                                    <field name="login" optional="show"/>
+                                    <field name="language" optional="show"/>
+                                    <field name="last_authentication" optional="show"/>
+                                    <field name="status" optional="show"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+
+            </form>
+
+        </field>
+    </record>
+
+    <!-- LIST VIEW -->
+    <record id="view_university_notice_tree" model="ir.ui.view">
+        <field name="name">university.notice.list</field>
+        <field name="model">university.notice</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="subject"/>
+                <field name="expiry_date"/>
+            </list>
+        </field>
+    </record>
+
+</odoo>

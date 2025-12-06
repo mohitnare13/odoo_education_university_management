@@ -1,0 +1,1027 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="university" name="University">
+        <t t-call="website.layout">
+            <t t-set="pageName" t-value="'homepage'"/>
+            <style>
+                @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&amp;display=swap');
+
+                * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                }
+
+                body {
+                cursor: none;
+                }
+
+                /* Custom Cursor */
+                .custom-cursor {
+                position: fixed;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, #FFD700, #FFA500);
+                pointer-events: none;
+                z-index: 9999;
+                transform: translate(-50%, -50%);
+                transition: width 0.3s, height 0.3s, background 0.3s;
+                box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+                }
+
+                .custom-cursor-trail {
+                position: fixed;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: rgba(255, 215, 0, 0.4);
+                pointer-events: none;
+                z-index: 9998;
+                transform: translate(-50%, -50%);
+                transition: transform 0.15s;
+                }
+
+                .custom-cursor.hover {
+                width: 60px;
+                height: 60px;
+                background: transparent;
+                border: 3px solid #FFD700;
+                box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+                }
+
+                /* Ripple Effect */
+                .ripple {
+                position: absolute;
+                border-radius: 50%;
+                background: radial-gradient(circle, rgba(255, 215, 0, 0.4) 0%, transparent 70%);
+                transform: scale(0);
+                animation: ripple-animation 0.8s ease-out;
+                pointer-events: none;
+                }
+
+                @keyframes ripple-animation {
+                to {
+                transform: scale(4);
+                opacity: 0;
+                }
+                }
+
+                .hero-section {
+                font-family: 'Poppins', sans-serif;
+                position: relative;
+                overflow: hidden;
+                box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+                }
+
+                .hero-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(135deg, rgba(15, 32, 62, 0.85) 0%, rgba(25, 55, 109, 0.75) 50%, rgba(42, 82,
+                152, 0.7) 100%);
+                z-index: 1;
+                }
+
+                .hero-content {
+                position: relative;
+                z-index: 2;
+                }
+
+                .hero-badge {
+                display: inline-block;
+                background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
+                backdrop-filter: blur(15px);
+                padding: 12px 40px;
+                border-radius: 50px;
+                color: #1a1a2e;
+                font-size: 13px;
+                font-weight: 800;
+                letter-spacing: 4px;
+                text-transform: uppercase;
+                border: 3px solid rgba(255, 215, 0, 0.8);
+                box-shadow: 0 10px 40px rgba(255, 215, 0, 0.6),
+                0 5px 20px rgba(255, 165, 0, 0.4),
+                inset 0 2px 15px rgba(255, 255, 255, 0.4);
+                animation: fadeInDown 1s ease, pulse 3s ease-in-out infinite;
+                transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                cursor: pointer;
+                }
+
+                .hero-badge:hover {
+                transform: translateY(-8px) scale(1.12) rotate(-2deg);
+                background: linear-gradient(135deg, #FFA500 0%, #FFD700 50%, #FFA500 100%);
+                border-color: #FFD700;
+                box-shadow: 0 20px 60px rgba(255, 215, 0, 0.8),
+                0 10px 30px rgba(255, 165, 0, 0.6),
+                inset 0 3px 20px rgba(255, 255, 255, 0.5);
+                letter-spacing: 5px;
+                }
+
+                @keyframes pulse {
+                0%, 100% {
+                box-shadow: 0 10px 40px rgba(255, 215, 0, 0.6),
+                0 5px 20px rgba(255, 165, 0, 0.4),
+                inset 0 2px 15px rgba(255, 255, 255, 0.4);
+                }
+                50% {
+                box-shadow: 0 15px 50px rgba(255, 215, 0, 0.8),
+                0 8px 30px rgba(255, 165, 0, 0.6),
+                inset 0 3px 20px rgba(255, 255, 255, 0.5);
+                }
+                }
+
+                .hero-title {
+                font-size: 72px;
+                font-weight: 900;
+                color: #fff;
+                text-shadow: 4px 4px 15px rgba(0,0,0,0.6),
+                0 0 30px rgba(255, 255, 255, 0.1);
+                margin: 30px 0 20px 0;
+                line-height: 1.15;
+                animation: fadeInUp 1s ease 0.2s both;
+                letter-spacing: -1px;
+                transition: all 0.3s ease;
+                }
+
+                .hero-title:hover {
+                transform: scale(1.02);
+                text-shadow: 4px 4px 20px rgba(0,0,0,0.8),
+                0 0 40px rgba(255, 215, 0, 0.3);
+                }
+
+                .hero-title .highlight {
+                background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                filter: drop-shadow(0 5px 15px rgba(255, 215, 0, 0.4));
+                font-weight: 900;
+                position: relative;
+                transition: all 0.3s ease;
+                }
+
+                .hero-title .highlight:hover {
+                filter: drop-shadow(0 8px 25px rgba(255, 215, 0, 0.8));
+                }
+
+                .hero-subtitle {
+                font-size: 26px;
+                font-weight: 400;
+                color: rgba(255, 255, 255, 0.95);
+                text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+                margin-bottom: 50px;
+                letter-spacing: 2px;
+                animation: fadeInUp 1s ease 0.4s both;
+                transition: all 0.3s ease;
+                }
+
+                .hero-subtitle:hover {
+                letter-spacing: 3px;
+                color: rgba(255, 255, 255, 1);
+                }
+
+                .hero-btn {
+                display: inline-block;
+                padding: 18px 50px;
+                border-radius: 50px;
+                font-weight: 700;
+                font-size: 17px;
+                text-decoration: none;
+                transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                margin: 0 12px;
+                animation: fadeInUp 1s ease 0.6s both;
+                position: relative;
+                overflow: hidden;
+                letter-spacing: 1px;
+                cursor: pointer;
+                }
+
+                .hero-btn::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+                transition: left 0.7s;
+                }
+
+                .hero-btn:hover::before {
+                left: 100%;
+                }
+
+                .hero-btn::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 0;
+                height: 0;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.3);
+                transform: translate(-50%, -50%);
+                transition: width 0.6s, height 0.6s;
+                }
+
+                .hero-btn:hover::after {
+                width: 300px;
+                height: 300px;
+                }
+
+                .hero-btn-primary {
+                background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
+                color: #1a1a2e;
+                box-shadow: 0 10px 35px rgba(255, 215, 0, 0.5),
+                0 5px 15px rgba(255, 165, 0, 0.3);
+                border: 3px solid rgba(255, 215, 0, 0.6);
+                }
+
+                .hero-btn-primary:hover {
+                transform: translateY(-10px) scale(1.12) rotate(-3deg);
+                background: linear-gradient(135deg, #FFA500 0%, #FFD700 50%, #FF8C00 100%);
+                box-shadow: 0 25px 60px rgba(255, 215, 0, 0.8),
+                0 15px 35px rgba(255, 165, 0, 0.6);
+                color: #0f1419;
+                border-color: #FFD700;
+                border-width: 4px;
+                }
+
+                .hero-btn-secondary {
+                background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
+                color: #1a1a2e;
+                border: 3px solid rgba(255, 215, 0, 0.6);
+                box-shadow: 0 10px 35px rgba(255, 215, 0, 0.5),
+                0 5px 15px rgba(255, 165, 0, 0.3);
+                }
+
+                .hero-btn-secondary:hover {
+                transform: translateY(-10px) scale(1.12) rotate(3deg);
+                background: linear-gradient(135deg, #FFA500 0%, #FFD700 50%, #FF8C00 100%);
+                box-shadow: 0 25px 60px rgba(255, 215, 0, 0.8),
+                0 15px 35px rgba(255, 165, 0, 0.6);
+                color: #0f1419;
+                border-color: #FFD700;
+                border-width: 4px;
+                }
+
+                @keyframes fadeInDown {
+                from {
+                opacity: 0;
+                transform: translateY(-40px);
+                }
+                to {
+                opacity: 1;
+                transform: translateY(0);
+                }
+                }
+
+                @keyframes fadeInUp {
+                from {
+                opacity: 0;
+                transform: translateY(40px);
+                }
+                to {
+                opacity: 1;
+                transform: translateY(0);
+                }
+                }
+
+                .floating-shapes {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                z-index: 1;
+                }
+
+                .shape {
+                position: absolute;
+                background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 165, 0, 0.1) 100%);
+                backdrop-filter: blur(15px);
+                border-radius: 50%;
+                border: 1px solid rgba(255, 215, 0, 0.2);
+                animation: float 8s ease-in-out infinite;
+                box-shadow: 0 8px 32px rgba(255, 215, 0, 0.2);
+                transition: all 0.3s ease;
+                }
+
+                .shape:hover {
+                background: linear-gradient(135deg, rgba(255, 215, 0, 0.3) 0%, rgba(255, 165, 0, 0.2) 100%);
+                transform: scale(1.2);
+                box-shadow: 0 12px 48px rgba(255, 215, 0, 0.4);
+                }
+
+                .shape-1 {
+                width: 120px;
+                height: 120px;
+                top: 15%;
+                left: 8%;
+                animation-delay: 0s;
+                }
+
+                .shape-2 {
+                width: 90px;
+                height: 90px;
+                top: 65%;
+                right: 10%;
+                animation-delay: 2.5s;
+                }
+
+                .shape-3 {
+                width: 150px;
+                height: 150px;
+                bottom: 10%;
+                left: 15%;
+                animation-delay: 5s;
+                }
+
+                @keyframes float {
+                0%, 100% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                }
+                25% {
+                transform: translateY(-25px) rotate(90deg) scale(1.05);
+                }
+                50% {
+                transform: translateY(-40px) rotate(180deg) scale(1.1);
+                }
+                75% {
+                transform: translateY(-25px) rotate(270deg) scale(1.05);
+                }
+                }
+
+                /* Enhanced Particle Effects */
+                .particles {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                z-index: 1;
+                }
+
+                .particle {
+                position: absolute;
+                width: 4px;
+                height: 4px;
+                background: rgba(255, 215, 0, 0.8);
+                border-radius: 50%;
+                animation: particleFloat 15s linear infinite;
+                box-shadow: 0 0 15px rgba(255, 215, 0, 0.9);
+                }
+
+                @keyframes particleFloat {
+                0% {
+                transform: translateY(100vh) translateX(0) scale(0);
+                opacity: 0;
+                }
+                10% {
+                opacity: 1;
+                transform: scale(1);
+                }
+                90% {
+                opacity: 1;
+                }
+                100% {
+                transform: translateY(-100px) translateX(100px) scale(0);
+                opacity: 0;
+                }
+                }
+
+                .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+                .particle:nth-child(2) { left: 25%; animation-delay: 3s; }
+                .particle:nth-child(3) { left: 40%; animation-delay: 6s; }
+                .particle:nth-child(4) { left: 55%; animation-delay: 9s; }
+                .particle:nth-child(5) { left: 70%; animation-delay: 12s; }
+                .particle:nth-child(6) { left: 85%; animation-delay: 2s; }
+                .particle:nth-child(7) { left: 15%; animation-delay: 5s; }
+                .particle:nth-child(8) { left: 60%; animation-delay: 8s; }
+
+                /* Spotlight Effect */
+                .spotlight {
+                position: fixed;
+                width: 300px;
+                height: 300px;
+                border-radius: 50%;
+                background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 70%);
+                pointer-events: none;
+                z-index: 9997;
+                transform: translate(-50%, -50%);
+                transition: opacity 0.3s;
+                opacity: 0;
+                }
+
+                .hero-section:hover .spotlight {
+                opacity: 1;
+                }
+
+                @media (max-width: 768px) {
+                body {
+                cursor: auto;
+                }
+                .custom-cursor,
+                .custom-cursor-trail,
+                .spotlight {
+                display: none;
+                }
+                .hero-title {
+                font-size: 42px;
+                }
+                .hero-subtitle {
+                font-size: 18px;
+                }
+                .hero-btn {
+                padding: 14px 35px;
+                font-size: 15px;
+                margin: 8px;
+                }
+                }
+            </style>
+
+            <div id="wrap" class="oe_structure oe_empty">
+                <!-- Custom Cursor Elements -->
+                <div class="custom-cursor"></div>
+                <div class="custom-cursor-trail"></div>
+                <div class="spotlight"></div>
+
+                <div class="hero-section">
+                    <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1920&amp;q=80&amp;auto=format&amp;fit=crop"
+                         alt="University Campus"
+                         style="width:100%; height: 700px; object-fit: cover; filter: brightness(0.9);"/>
+
+                    <div class="hero-overlay"></div>
+
+                    <div class="floating-shapes">
+                        <div class="shape shape-1"></div>
+                        <div class="shape shape-2"></div>
+                        <div class="shape shape-3"></div>
+                    </div>
+
+                    <div class="particles">
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                    </div>
+
+                    <div class="hero-content"
+                         style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; width: 90%; max-width: 1200px;">
+                        <div class="hero-badge">🎓 WELCOME TO EXCELLENCE</div>
+
+                        <h1 class="hero-title">
+                            Shaping
+                            <span class="highlight">Future Leaders</span>
+                            <br/>
+                            Through Quality Education
+                        </h1>
+
+                        <p class="hero-subtitle">
+                            Empowering Minds | Building Careers | Creating Tomorrow
+                        </p>
+
+                        <div style="margin-top: 50px;">
+                            <a class="hero-btn hero-btn-primary" href="/applyonline">
+                                📝 Apply Now
+                            </a>
+                            <a class="hero-btn hero-btn-secondary" href="/contactus">
+                                📩 Contact Us
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                const cursor = document.querySelector('.custom-cursor');
+                const cursorTrail = document.querySelector('.custom-cursor-trail');
+                const spotlight = document.querySelector('.spotlight');
+                const heroSection = document.querySelector('.hero-section');
+
+                let mouseX = 0, mouseY = 0;
+                let trailX = 0, trailY = 0;
+
+                // Update cursor position
+                document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+
+                cursor.style.left = mouseX + 'px';
+                cursor.style.top = mouseY + 'px';
+
+                spotlight.style.left = mouseX + 'px';
+                spotlight.style.top = mouseY + 'px';
+                });
+
+                // Smooth trail animation
+                function animateTrail() {
+                trailX += (mouseX - trailX) * 0.15;
+                trailY += (mouseY - trailY) * 0.15;
+
+                cursorTrail.style.left = trailX + 'px';
+                cursorTrail.style.top = trailY + 'px';
+
+                requestAnimationFrame(animateTrail);
+                }
+                animateTrail();
+
+                // Hover effects on interactive elements
+                const interactiveElements = document.querySelectorAll('a, button, .hero-badge, .hero-title, .shape');
+
+                interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                cursor.classList.add('hover');
+                });
+
+                el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hover');
+                });
+                });
+
+                // Ripple effect on click
+                heroSection.addEventListener('click', (e) => {
+                const ripple = document.createElement('div');
+                ripple.classList.add('ripple');
+                ripple.style.left = e.clientX - heroSection.offsetLeft + 'px';
+                ripple.style.top = e.clientY - heroSection.offsetTop + 'px';
+                ripple.style.width = '100px';
+                ripple.style.height = '100px';
+
+                heroSection.appendChild(ripple);
+
+                setTimeout(() => {
+                ripple.remove();
+                }, 800);
+                });
+
+                // Magnetic effect for buttons
+                const buttons = document.querySelectorAll('.hero-btn');
+
+                buttons.forEach(button => {
+                button.addEventListener('mousemove', (e) => {
+                const rect = button.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+
+                button.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px) scale(1.05)`;
+                });
+
+                button.addEventListener('mouseleave', () => {
+                button.style.transform = '';
+                });
+                });
+                });
+            </script>
+        </t>
+    </template>
+
+    <!-- Enhanced template for online admission -->
+    <template id="online_admission" name="Online Admission">
+        <t t-call="website.layout">
+            <style>
+                .admission-container {
+                background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+                padding: 60px 0;
+                min-height: 100vh;
+                }
+                .admission-card {
+                background: #ffffff;
+                border-radius: 20px;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+                padding: 50px;
+                margin: 0 auto;
+                max-width: 1000px;
+                }
+                .form-section-title {
+                color: #667eea;
+                font-size: 20px;
+                font-weight: 600;
+                margin: 30px 0 20px 0;
+                padding-bottom: 10px;
+                border-bottom: 3px solid #667eea;
+                display: inline-block;
+                }
+                .form-control {
+                border: 2px solid #e0e6ed;
+                border-radius: 10px;
+                padding: 12px 15px;
+                transition: all 0.3s ease;
+                }
+                .form-control:focus {
+                border-color: #667eea;
+                box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
+                }
+                .form-label {
+                font-weight: 600;
+                color: #2d3748;
+                margin-bottom: 8px;
+                font-size: 14px;
+                }
+                .submit-btn {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border: none;
+                border-radius: 50px;
+                padding: 15px 60px;
+                font-size: 18px;
+                font-weight: 600;
+                color: white;
+                box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+                transition: all 0.3s ease;
+                margin-top: 30px;
+                }
+                .submit-btn:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+                }
+                .header-section {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                padding: 80px 0;
+                text-align: center;
+                color: white;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+                }
+                .header-section h1 {
+                font-size: 48px;
+                font-weight: 700;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+                }
+                .input-group-custom {
+                margin-bottom: 25px;
+                }
+            </style>
+
+            <section class="header-section"
+                     style="background-image: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1920&amp;q=80&amp;auto=format&amp;fit=crop');
+                            background-size: cover;
+                            background-position: center center;
+                            background-repeat: no-repeat;
+                            position: relative;">
+                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+                            background: linear-gradient(135deg, rgba(102, 126, 234, 0.8) 0%, rgba(118, 75, 162, 0.8) 100%);"></div>
+                <div class="container" style="position: relative; z-index: 1;">
+                    <h1>🎓 Online Admission Portal</h1>
+                    <p style="font-size: 18px; margin-top: 15px; opacity: 0.95;">Begin Your Academic Journey With Us</p>
+                </div>
+            </section>
+
+            <div class="admission-container">
+                <div class="container">
+                    <div class="admission-card">
+                        <form action="/admission/submit" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                            <!-- Personal Information Section -->
+                            <h3 class="form-section-title">Personal Information</h3>
+
+                            <div class="row input-group-custom">
+                                <div class="col-md-6">
+                                    <label class="form-label">First Name</label>
+                                    <input id="first_name" type="text" class="form-control"
+                                           name="first_name" placeholder="Enter first name" required="1"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Last Name</label>
+                                    <input id="last_name" type="text" class="form-control"
+                                           name="last_name" placeholder="Enter last name" required="1"/>
+                                </div>
+                            </div>
+
+                            <div class="row input-group-custom">
+                                <div class="col-md-6">
+                                    <label class="form-label">Email Address</label>
+                                    <input id="email" type="email" class="form-control"
+                                           name="email" placeholder="your.email@example.com" required="1"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Phone Number</label>
+                                    <input id="phone" type="tel" class="form-control"
+                                           name="phone" placeholder="+91 XXXXX XXXXX" required="1"/>
+                                </div>
+                            </div>
+
+                            <div class="row input-group-custom">
+                                <div class="col-md-6">
+                                    <label class="form-label">Date of Birth</label>
+                                    <input id="date" name="date" type="date" class="form-control"
+                                           required="1"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Gender</label>
+                                    <select id="gender" name="gender" class="form-control" required="1">
+                                        <option value="">-- Select Gender --</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row input-group-custom" style="margin-top: 15px;">
+                                <div class="col-md-6">
+                                    <label class="form-label">Mother Tongue</label>
+                                    <input id="tongue" type="text" class="form-control"
+                                           name="tongue" placeholder="Enter mother tongue" required="1"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Nationality</label>
+                                    <select id="nationality" name="country_id" class="form-control" required="1">
+                                        <option value="">-- Select Nationality --</option>
+                                        <t t-foreach="countries" t-as="country">
+                                            <option t-att-value="country.id">
+                                                <t t-esc="country.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="row input-group-custom" style="margin-top: 15px;">
+                                <div class="col-md-6">
+                                    <label class="form-label">Religion</label>
+                                    <input id="religion" type="text" class="form-control"
+                                           name="religion" placeholder="e.g. Hindu, Muslim"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Caste</label>
+                                    <input id="caste" type="text" class="form-control"
+                                           name="caste" placeholder="e.g. General, OBC"/>
+                                </div>
+                            </div>
+
+
+                            <!-- Address Information Section -->
+                            <h3 class="form-section-title">Address Information</h3>
+
+                            <div class="row input-group-custom">
+                                <div class="col-md-6">
+                                    <label class="form-label">Street</label>
+                                    <input id="street" type="text" class="form-control"
+                                           name="street" placeholder="Enter street" required="1"/>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">Street 2</label>
+                                    <input id="street2" type="text" class="form-control"
+                                           name="street2" placeholder="Enter street 2 (optional)"/>
+                                </div>
+                            </div>
+
+                            <div class="row input-group-custom">
+                                <div class="col-md-4">
+                                    <label class="form-label">City</label>
+                                    <input id="city" type="text" class="form-control"
+                                           name="city" placeholder="Enter city" required="1"/>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="form-label">ZIP Code</label>
+                                    <input id="zip" type="text" class="form-control"
+                                           name="zip" placeholder="Enter ZIP Code" required="1"/>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="form-label">State</label>
+                                    <select id="state_id" name="state_id" class="form-control" required="1">
+                                        <option value="">-- Select State --</option>
+                                        <t t-foreach="states" t-as="state">
+                                            <option t-att-value="state.id">
+                                                <t t-esc="state.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row input-group-custom">
+                                <div class="col-md-4">
+                                    <label class="form-label">Country</label>
+                                    <select id="country_id" name="country_id" class="form-control" required="1">
+                                        <option value="">-- Select Country --</option>
+                                        <t t-foreach="countries" t-as="country">
+                                            <option t-att-value="country.id">
+                                                <t t-esc="country.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Family Information Section -->.
+                            <h3 class="form-section-title">Family Information</h3>
+
+                            <div class="row input-group-custom">
+                                <div class="col-md-6">
+                                    <label class="form-label">Father's Name</label>
+                                    <input id="father" type="text" class="form-control"
+                                           name="father" placeholder="Enter father's name" required="1"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Mother's Name</label>
+                                    <input id="mother" type="text" class="form-control"
+                                           name="mother" placeholder="Enter mother's name" required="1"/>
+                                </div>
+                            </div>
+                            <div class="row input-group-custom" style="margin-top: 15px;">
+                                <div class="col-md-6">
+                                    <label class="form-label">Father's Occupation</label>
+                                    <input id="father_occupation" type="text" class="form-control"
+                                           name="father_occupation" placeholder="e.g. Engineer, Business"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Mother's Occupation</label>
+                                    <input id="mother_occupation" type="text" class="form-control"
+                                           name="mother_occupation" placeholder="e.g. Teacher, Homemaker"/>
+                                </div>
+                            </div>
+
+
+                            <!-- Previous Education Section -->
+                            <h3 class="form-section-title">Previous Education Details</h3>
+
+                            <div class="row input-group-custom">
+                                <div class="col-md-6">
+                                    <label class="form-label">Previous Institute</label>
+                                    <input id="prev_institute" type="text" class="form-control"
+                                           name="prev_institute" placeholder="Institute name" required="1"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Previous Course</label>
+                                    <input id="prev_course" type="text" class="form-control"
+                                           name="prev_course" placeholder="Course name" required="1"/>
+                                </div>
+                            </div>
+
+                            <div class="row input-group-custom">
+                                <div class="col-md-6">
+                                    <label class="form-label">Previous Result (%)</label>
+                                    <input id="prev_result" type="number" class="form-control"
+                                           name="prev_result" placeholder="Enter percentage"
+                                           min="0" max="100" step="0.01" required="1"/>
+                                </div>
+                            </div>
+
+                            <!-- Course Selection Section -->
+                            <h3 class="form-section-title">Course Selection</h3>
+
+                            <div class="row input-group-custom">
+                                <div class="col-md-6">
+                                    <label class="form-label">Academic Year</label>
+                                    <select name="academic_year" class="form-control" required="1">
+                                        <option value="">-- Select Academic Year --</option>
+                                        <t t-foreach="year" t-as="rec">
+                                            <option t-att-value="rec.id">
+                                                <t t-esc="rec.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Course</label>
+                                    <select name="course" class="form-control" required="1">
+                                        <option value="">-- Select Course --</option>
+                                        <t t-foreach="course" t-as="rec">
+                                            <option t-att-value="rec.id">
+                                                <t t-esc="rec.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row input-group-custom">
+                                <div class="col-md-4">
+                                    <label class="form-label">Specialization</label>
+                                    <select name="department" class="form-control">
+                                        <option value="">-- Select Specialization --</option>
+                                        <t t-foreach="department" t-as="rec">
+                                            <option t-att-value="rec.id">
+                                                <t t-esc="rec.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <!-- Document Upload Section -->
+                            <h3 class="form-section-title mb-3">Document Upload</h3>
+
+                            <div class="row input-group-custom g-3">
+                                <!-- Document Type -->
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold">Document Type</label>
+                                    <select name="doc_type" class="form-control" required="1">
+                                        <option value="">-- Select Type --</option>
+                                        <t t-foreach="doc_type" t-as="rec">
+                                            <option t-att-value="rec.id">
+                                                <t t-esc="rec.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+
+                                <!-- Upload Document -->
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold">Upload Document</label>
+                                    <input type="file" name="att" class="form-control"
+                                           accept="image/*,application/pdf,video/*"/>
+                                    <small class="text-muted">Accepted: Images, PDF, Video</small>
+                                </div>
+
+                                <!-- Upload Photo -->
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold">Upload Your Photo</label>
+                                    <input id="image" type="file" name="image" class="form-control"
+                                           accept="image/png,image/jpeg" required="1"/>
+                                    <small class="text-muted">Accepted: PNG, JPEG</small>
+                                </div>
+                            </div>
+
+
+                            <div class="text-center">
+                                <button type="submit" class="btn submit-btn">
+                                    Submit Application
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Enhanced success template -->
+    <template id="submit_admission" name="Admission Submit">
+        <t t-call="website.layout">
+            <style>
+                .success-container {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 40px 0;
+                }
+                .success-card {
+                background: white;
+                border-radius: 30px;
+                padding: 60px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+                text-align: center;
+                max-width: 600px;
+                }
+                .success-icon {
+                width: 120px;
+                height: 120px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 30px;
+                animation: scaleIn 0.5s ease;
+                }
+                @keyframes scaleIn {
+                from { transform: scale(0); }
+                to { transform: scale(1); }
+                }
+                .success-icon i {
+                font-size: 60px;
+                color: white;
+                }
+            </style>
+
+            <div class="success-container">
+                <div class="container">
+                    <div class="success-card">
+                        <div class="success-icon">
+                            <i class="fa fa-check"></i>
+                        </div>
+                        <h1 style="color: #667eea; font-weight: 700; margin-bottom: 20px;">Thank You!</h1>
+                        <div style="width: 100px; height: 4px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                                    margin: 20px auto; border-radius: 2px;"></div>
+                        <h4 style="color: #2d3748; margin: 30px 0;">
+                            Your admission has been registered <span style="color: #667eea;">successfully</span>! 🎉
+                        </h4>
+                        <p style="color: #718096; font-size: 16px; line-height: 1.8;">
+                            We have received your application and our admissions team will review it shortly.
+                            You will receive a confirmation email with further details.
+                        </p>
+                        <a href="/" class="btn btn-primary"
+                           style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                                  border: none; padding: 15px 40px; border-radius: 50px;
+                                  margin-top: 30px; font-weight: 600;">
+                            Return to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

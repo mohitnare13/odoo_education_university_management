@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Parent Menu Already Exists -->
+    <menuitem
+        id="menu_university_school_configuration"
+        name="School Configuration"
+        parent="menu_university_configuration_root"
+        sequence="10"
+        groups="education_university_management.education_university_management_group_hod"
+    />
+
+
+  <!-- Utilities -->
+    <record id="grade_action" model="ir.actions.act_window">
+        <field name="name">Grade</field>
+        <field name="res_model">university.grade</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="menu_grade" name="Grade" parent="menu_university_school_configuration"
+              action="grade_action"/>
+
+    <record id="mother_tongue_action" model="ir.actions.act_window">
+        <field name="name">Mother Tongue</field>
+        <field name="res_model">university.mother.tongue</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="menu_mother_tongue" name="Mother Tongue" parent="menu_university_school_configuration"
+              action="mother_tongue_action"/>
+
+    <record id="division_action" model="ir.actions.act_window">
+        <field name="name">Division</field>
+        <field name="res_model">university.division</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="menu_division" name="Division" parent="menu_university_school_configuration"
+              action="division_action"/>
+
+    <record id="language_action" model="ir.actions.act_window">
+        <field name="name">Language</field>
+        <field name="res_model">university.language</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="menu_language" name="Language" parent="menu_university_school_configuration"
+              action="language_action"/>
+
+    <record id="hobby_action" model="ir.actions.act_window">
+        <field name="name">Hobby</field>
+        <field name="res_model">university.hobby</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="menu_hobby" name="Hobby" parent="menu_university_school_configuration"
+              action="hobby_action"/>
+
+
+</odoo>
